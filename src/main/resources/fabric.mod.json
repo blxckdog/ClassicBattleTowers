@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "battletowers",
+	"version": "${version}",
+	"name": "Classic Battle Towers",
+	"description": "Discover challenging towers full of monsters and fight your way to the top!\nThis mod brings the original ideas of Kodaichi's and AtomicStryker's Battle Tower Mods back to newer versions.",
+	"authors": [
+		"_blackdog",
+		"N1ck1903"
+	],
+	"contact": {
+		"homepage": "",
+		"sources": "https://github.com/blxckdog/ClassicBattleTowers"
+	},
+	"license": "CC BY-NC 4.0",
+	"icon": "assets/battletowers/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"blxckdog.battletowers.ClassicBattleTowers"
+		],
+		"client": [ 
+			"blxckdog.battletowers.ClassicBattleTowersClient"
+		]
+	},
+	"mixins": [],
+	"depends": {
+		"fabricloader": ">=0.15.3",
+		"minecraft": "~1.20",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
