@@ -132,7 +132,7 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
 		double srcZ = getZ();
 		
 		double dstX = target.getX() - srcX;
-		double dstY = target.getY() + (getStandingEyeHeight() * .5) - srcY;
+		double dstY = target.getY() + (target.getStandingEyeHeight() * .5) - srcY;
 		double dstZ = target.getZ() - srcZ;
 		
 		TowerGolemFireballEntity fireball = new TowerGolemFireballEntity(getWorld(), this, dstX, dstY, dstZ, power);

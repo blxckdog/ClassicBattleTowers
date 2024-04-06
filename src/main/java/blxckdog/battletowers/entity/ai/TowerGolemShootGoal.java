@@ -60,7 +60,7 @@ public class TowerGolemShootGoal extends Goal {
 			}
 		} else if (updateCountdownTicks == 0) {
 			if(delta - maxShootRange*maxShootRange <= 0) {
-				golem.shootAt(target, visible ? 1f : 1.9f);
+				golem.shootAt(target, visible ? 1f : 1.5f);
 			}
 			
 			updateCountdownTicks = intervalTicks;
