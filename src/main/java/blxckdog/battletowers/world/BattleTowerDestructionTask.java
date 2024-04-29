@@ -37,8 +37,7 @@ public class BattleTowerDestructionTask implements Runnable {
 
         if (tickCounter % (INITIAL_DELAY + floorCounter * PER_FLOOR_DELAY) == 0) {
             if (!world.isClient) {
-                // Reduce damage ???
-                explode(centerX, centerZ, 7, floorCounter);
+            	explodeCircular(centerX, centerZ, 4, 8);
                 removeFlyingBlocks();
             }
 
@@ -50,26 +49,15 @@ public class BattleTowerDestructionTask implements Runnable {
         }
     }
 
-    private void explode(int centerX, int centerZ, int towerRadius, int floorCounter) {
-        double angle = 0; // The initial angle
-        double radius = 0; // The initial radius
-        double angleIncrement = Math.PI / 36; // The amount to increment the angle each time (this will determine the "tightness" of the spiral)
-        double radiusIncrement = 0.5; // The amount to increment the radius each time (this will determine the "width" of the spiral)
-
-        while (radius <= towerRadius) {
-            // Convert polar coordinates to Cartesian coordinates
-            int x = (int) (radius * Math.cos(angle));
-            int z = (int) (radius * Math.sin(angle));
-
-            // Create the vertical column of explosions at this (x, z) position
-            for (int y = 0; y < 7; y++) {
-                BlockPos pos = new BlockPos(centerX + x, getAdjustedY() + y, centerZ + z);
-                world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 1f, ExplosionSourceType.MOB);
-            }
-
-            // Increment the angle and radius for the next iteration
-            angle += angleIncrement;
-            radius += radiusIncrement;
+    private void explodeCircular(int centerX, int centerZ, int towerRadius, int explosionCount) {
+        float angleIncrement = 360 / explosionCount; // The amount to increment the angle each time (this will determine the "tightness" of the spiral)
+        
+        for(int i=0; i < explosionCount; i++) {
+        	float angle = angleIncrement * i;
+        	int x = (int) (towerRadius * Math.cos(angle));
+            int z = (int) (towerRadius * Math.sin(angle));
+            
+            world.createExplosion(null, centerX+x, getAdjustedY()-2, centerZ+z, 4f, ExplosionSourceType.MOB);
         }
     }
 
