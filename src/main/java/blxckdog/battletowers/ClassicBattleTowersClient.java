@@ -2,7 +2,6 @@ package blxckdog.battletowers;
 
 import static blxckdog.battletowers.ClassicBattleTowers.id;
 
-import blxckdog.battletowers.entity.TowerGolemFireballEntity;
 import blxckdog.battletowers.entity.render.TowerGolemModel;
 import blxckdog.battletowers.entity.render.TowerGolemRenderer;
 
@@ -22,16 +21,11 @@ public class ClassicBattleTowersClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		// Register rendering for Battle Tower Golem
-		EntityRendererRegistry.register(ClassicBattleTowers.BATTLE_TOWER_GOLEM, (context) -> {
-			return new TowerGolemRenderer(context);
-		});
-		
+		EntityRendererRegistry.register(ClassicBattleTowers.BATTLE_TOWER_GOLEM, TowerGolemRenderer::new);
 		EntityModelLayerRegistry.registerModelLayer(MODEL_TOWER_GOLEM_LAYER, TowerGolemModel::getTexturedModelData);
 		
-		// Register rendering for Battle Tower Golem Fireball Projectile
-		EntityRendererRegistry.register(ClassicBattleTowers.BATTLE_TOWER_GOLEM_FIREBALL, (context) -> {
-			return new FlyingItemEntityRenderer<TowerGolemFireballEntity>(context);
-		});
+		// Register rendering for Battle Tower Golem Fireball projectile
+		EntityRendererRegistry.register(ClassicBattleTowers.BATTLE_TOWER_GOLEM_FIREBALL, FlyingItemEntityRenderer::new);
 	}
 	
 }

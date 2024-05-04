@@ -40,10 +40,12 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
 
     protected static final TrackedData<BlockPos> TOWER_POS;
     protected static final TrackedData<Boolean> DORMANT;
+    protected static final TrackedData<Boolean> UNDERGROUND;
 
     static {
         TOWER_POS = DataTracker.registerData(TowerGolemEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
         DORMANT = DataTracker.registerData(TowerGolemEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+        UNDERGROUND = DataTracker.registerData(TowerGolemEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     }
 
     public static DefaultAttributeContainer.Builder createTowerGolemAttributes() {
@@ -58,18 +60,16 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1);
     }
 
-    // private boolean towerUnderground; ???
-
 
     public TowerGolemEntity(EntityType<TowerGolemEntity> type, World world) {
         super(type, world);
     }
 
-
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker(builder);
         builder.add(TOWER_POS, BlockPos.ORIGIN);
+        builder.add(UNDERGROUND, false);
         builder.add(DORMANT, true);
     }
 
@@ -101,7 +101,7 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
 
         if (!getWorld().isClient && getTowerPosition() != BlockPos.ORIGIN) {
             // Destroy Tower
-            BattleTowerDestructionManager.registerTask(new BattleTowerDestructionTask(getWorld(), getTowerPosition()));
+            BattleTowerDestructionManager.registerTask(new BattleTowerDestructionTask(getWorld(), getTowerPosition(), isTowerUnderground()));
 
             Text deathText = Text.translatable("notify.battletowers.golem_defeated");
             Objects.requireNonNull(getServer()).getPlayerManager().broadcast(deathText, false);
@@ -222,8 +222,12 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
         this.dataTracker.set(TOWER_POS, towerPos);
     }
 
+    public void setTowerUnderground(boolean value) {
+        this.dataTracker.set(UNDERGROUND, value);
+    }
+
     public boolean isTowerUnderground() {
-        return false; // TODO
+        return this.dataTracker.get(UNDERGROUND);
     }
 
 
@@ -236,11 +240,15 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
             int spawnY = nbt.getInt("TowerY");
             int spawnZ = nbt.getInt("TowerZ");
 
-            this.dataTracker.set(TOWER_POS, new BlockPos(spawnX, spawnY, spawnZ));
+            setTowerPosition(new BlockPos(spawnX, spawnY, spawnZ));
+        }
+
+        if(nbt.contains("TowerUnderground")) {
+            setTowerUnderground(nbt.getBoolean("TowerUnderground"));
         }
 
         if (nbt.contains("Dormant")) {
-            this.dataTracker.set(DORMANT, nbt.getBoolean("Dormant"));
+            setDormant(nbt.getBoolean("Dormant"));
         }
     }
 
@@ -248,6 +256,7 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Dormant", isDormant());
+        nbt.putBoolean("TowerUnderground", isTowerUnderground());
 
         BlockPos spawnPos = getTowerPosition();
         nbt.putInt("TowerX", spawnPos.getX());
