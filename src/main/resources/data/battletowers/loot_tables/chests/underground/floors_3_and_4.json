@@ -17,7 +17,7 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1,
-                "max": 4
+                "max": 3
               }
             }
           ]
@@ -31,8 +31,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 5,
-                "max": 10
+                "min": 3,
+                "max": 6
               }
             }
           ]
@@ -133,7 +133,7 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 4,
-                "max": 10
+                "max": 8
               }
             }
           ]
@@ -161,7 +161,7 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 2,
-                "max": 6
+                "max": 4
               }
             }
           ]
@@ -175,14 +175,14 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 3,
-                "max": 8
+                "max": 6
               }
             }
           ]
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:oak_log",
+          "name": "minecraft:spruce_planks",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -231,7 +231,7 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 4,
-                "max": 12
+                "max": 8
               }
             }
           ]
@@ -301,7 +301,7 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 2,
-                "max": 12
+                "max": 10
               }
             }
           ]

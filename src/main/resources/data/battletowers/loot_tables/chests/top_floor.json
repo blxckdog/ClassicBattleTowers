@@ -66,23 +66,23 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
-          "name": "minecraft:diamond_hoe"
+          "name": "minecraft:diamond_hoe",
+          "weight": 1
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
-          "name": "minecraft:diamond_axe"
+          "name": "minecraft:diamond_axe",
+          "weight": 1
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
-          "name": "minecraft:diamond_shovel"
+          "name": "minecraft:diamond_shovel",
+          "weight": 1
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
-          "name": "minecraft:diamond_pickaxe"
+          "name": "minecraft:diamond_pickaxe",
+          "weight": 1
         },
         {
           "type": "minecraft:item",
@@ -111,35 +111,7 @@
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 4,
-                "max": 12
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:emerald",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 4,
-                "max": 10
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:ender_pearl",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 3,
+                "min": 2,
                 "max": 6
               }
             }
@@ -147,21 +119,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:golden_carrot",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 3,
-                "max": 8
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:golden_apple",
+          "name": "minecraft:emerald",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -175,14 +133,56 @@
         },
         {
           "type": "minecraft:item",
+          "name": "minecraft:ender_pearl",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 3
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:golden_carrot",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 4
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:golden_apple",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:diamond",
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2,
-                "max": 6
+                "min": 1,
+                "max": 3
               }
             }
           ]
