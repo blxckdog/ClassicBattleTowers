@@ -182,7 +182,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:oak_log",
+          "name": "minecraft:oak_planks",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -273,7 +273,7 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 2,
-                "max": 10
+                "max": 8
               }
             }
           ]
@@ -287,7 +287,7 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 2,
-                "max": 10
+                "max": 8
               }
             }
           ]
@@ -301,7 +301,7 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 2,
-                "max": 12
+                "max": 8
               }
             }
           ]
