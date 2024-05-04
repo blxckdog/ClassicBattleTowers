@@ -176,6 +176,16 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
         return 999;
     }
 
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean isPushedByFluids() {
+        return false;
+    }
+
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
