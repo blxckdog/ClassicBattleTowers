@@ -1,10 +1,12 @@
 package blxckdog.battletowers;
 
 import java.util.List;
+import java.util.Set;
 
 import blxckdog.battletowers.entity.TowerGolemEntity;
 import blxckdog.battletowers.entity.TowerGolemFireballEntity;
 import blxckdog.battletowers.world.BattleTowerDestructionManager;
+
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -86,21 +88,28 @@ public class ClassicBattleTowers implements ModInitializer {
 			if(!(entity instanceof MarkerEntity)) {
 				return;
 			}
-			
-			if(!entity.getCommandTags().contains("battletowers.summon.default_golem")) {
+
+			Set<String> entityTags = entity.getCommandTags();
+
+			if(!entityTags.contains("battletowers.summon.default_golem") &&
+					!entityTags.contains("battletowers.summon.default_golem_underground")) {
 				return;
 			}
-			
-			// Replace marker with Battle Tower Golem
-			TowerGolemEntity battleTowerGolem = new TowerGolemEntity(ClassicBattleTowers.BATTLE_TOWER_GOLEM, world.toServerWorld());
+
+			TowerGolemEntity battleTowerGolem = new TowerGolemEntity(BATTLE_TOWER_GOLEM, world.toServerWorld());
 			battleTowerGolem.setPosition(entity.getPos());
 			battleTowerGolem.setTowerPosition(entity.getBlockPos());
+
+			if(entityTags.contains("battletowers.summon.default_golem_underground")) {
+				battleTowerGolem.setTowerUnderground(true);
+			}
+
+			// Replace marker with Battle Tower Golem
 			world.spawnEntity(battleTowerGolem);
-			
 			entity.remove(RemovalReason.DISCARDED);
 		});
 		
-		// Listen for chest or hopper use to wake up Battle Tower GOlem
+		// Listen for chest or hopper use to wake up Battle Tower Golem
 		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
 			BlockPos pos = hitResult.getBlockPos();
 			BlockState state = world.getBlockState(pos);
@@ -115,7 +124,7 @@ public class ClassicBattleTowers implements ModInitializer {
 			
 			List<TowerGolemEntity> nearbyGolems = world.getEntitiesByClass(
 					TowerGolemEntity.class, 
-					new Box(pos).expand(12), 
+					new Box(pos).expand(10),
 					golem -> true
 				);
 		

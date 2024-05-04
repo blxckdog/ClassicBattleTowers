@@ -20,10 +20,10 @@ public class BattleTowerDestructionTask implements Runnable {
     private int floorCounter = 0;
 
 
-    public BattleTowerDestructionTask(World world, BlockPos startPos) {
+    public BattleTowerDestructionTask(World world, BlockPos startPos, boolean underground) {
         this.startPos = startPos;
         this.world = world;
-        underground = false;
+        this.underground = underground;
 
         world.playSound(null, startPos, ClassicBattleTowers.SOUND_TOWER_BREAK_START, SoundCategory.HOSTILE, 4f, 1f);
     }
@@ -38,14 +38,14 @@ public class BattleTowerDestructionTask implements Runnable {
         if (tickCounter % (INITIAL_DELAY + floorCounter * PER_FLOOR_DELAY) == 0) {
             if (!world.isClient) {
             	explodeCircular(centerX, centerZ, 4, 8);
-                removeFlyingBlocks();
+                if(!underground) removeFlyingBlocks();
             }
 
             floorCounter++;
         }
 
         if (tickCounter % (INITIAL_DELAY + floorCounter * PER_FLOOR_DELAY + 10) == 0) {
-            world.playSound(null, startPos, ClassicBattleTowers.SOUND_TOWER_CRUMBLE, SoundCategory.HOSTILE, 4f, 1f);
+            world.playSound(null, centerX, getAdjustedY(), centerZ, ClassicBattleTowers.SOUND_TOWER_CRUMBLE, SoundCategory.HOSTILE, 4f, 1f);
         }
     }
 
@@ -63,8 +63,8 @@ public class BattleTowerDestructionTask implements Runnable {
 
 
     private void removeFlyingBlocks() {
-        // Remove flying blocks in underground towers???
-        int yOffset = underground ? floorCounter * 7 : -floorCounter * 7;
+        //int yOffset = underground ? floorCounter * 7 : -floorCounter * 7;
+        int yOffset = -floorCounter * 7;
 
         for (int x = -8; x < 8; x++) {
             for (int z = -8; z < 8; z++) {
