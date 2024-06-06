@@ -66,11 +66,11 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker(builder);
-        builder.add(TOWER_POS, BlockPos.ORIGIN);
-        builder.add(UNDERGROUND, false);
-        builder.add(DORMANT, true);
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(TOWER_POS, BlockPos.ORIGIN);
+        this.dataTracker.startTracking(UNDERGROUND, false);
+        this.dataTracker.startTracking(DORMANT, true);
     }
 
     @Override
