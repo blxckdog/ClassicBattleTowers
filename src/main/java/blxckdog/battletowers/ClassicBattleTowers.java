@@ -63,7 +63,7 @@ public class ClassicBattleTowers implements ModInitializer {
 	
 	
 	public static Identifier id(String path) {
-		return new Identifier("battletowers", path);
+		return Identifier.of("battletowers", path);
 	}
 	
 	

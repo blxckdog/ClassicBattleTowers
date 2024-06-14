@@ -113,7 +113,7 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
         if (source.getSource() != null) {
             Entity attacker = source.getSource();
 
-            if (source.isIndirect()) {
+            if (!source.isDirect()) {
                 attacker = source.getAttacker();
             }
 

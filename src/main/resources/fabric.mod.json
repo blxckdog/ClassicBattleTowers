@@ -13,7 +13,7 @@
 		"homepage": "",
 		"sources": "https://github.com/blxckdog/ClassicBattleTowers"
 	},
-	"license": "CC BY-NC 4.0",
+	"license": "CC BY-NC 3.0",
 	"icon": "assets/battletowers/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -27,7 +27,7 @@
 	"mixins": [],
 	"depends": {
 		"fabricloader": ">=0.15.3",
-		"minecraft": "~1.20",
+		"minecraft": "~1.21",
 		"java": ">=17",
 		"fabric-api": "*"
 	},

@@ -13,6 +13,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.World.ExplosionSourceType;
@@ -28,7 +29,7 @@ public class TowerGolemFireballEntity extends AbstractFireballEntity {
 	}
 	
 	protected TowerGolemFireballEntity(World world, LivingEntity owner, double velocityX, double velocityY, double velocityZ, float explosionPower) {
-		super(ClassicBattleTowers.BATTLE_TOWER_GOLEM_FIREBALL, owner, velocityX, velocityY, velocityZ, world);
+		super(ClassicBattleTowers.BATTLE_TOWER_GOLEM_FIREBALL, owner, new Vec3d(velocityX, velocityY, velocityZ), world);
 		this.explosionPower = explosionPower;
 	}
 	

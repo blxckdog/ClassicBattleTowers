@@ -22,12 +22,11 @@ public class TowerGolemModel extends BipedEntityModel<TowerGolemEntity> {
 	}
 
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
 		matrices.scale(2f, 2f, 2f);
 		matrices.translate(0f, -0.75f, 0f);
-		
-		// Call delegated render method
-		super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+
+		super.render(matrices, vertices, light, overlay, color);
 	}
 
 }
