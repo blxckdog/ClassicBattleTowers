@@ -11,11 +11,9 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity.RemovalReason;
-import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MarkerEntity;
 import net.minecraft.entity.SpawnGroup;
@@ -35,16 +33,16 @@ public class ClassicBattleTowers implements ModInitializer {
 	public static final EntityType<TowerGolemEntity> BATTLE_TOWER_GOLEM = Registry.register(
 			Registries.ENTITY_TYPE, 
 			id("battle_tower_golem"),
-			FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, TowerGolemEntity::new)
-					.dimensions(EntityDimensions.fixed(1.7f, 4f))
+			EntityType.Builder.create(TowerGolemEntity::new, SpawnGroup.MONSTER)
+					.dimensions(1.7f, 4f)
 					.build()
 			);
 	
 	public static final EntityType<TowerGolemFireballEntity> BATTLE_TOWER_GOLEM_FIREBALL = Registry.register(
 			Registries.ENTITY_TYPE, 
 			id("battle_tower_golem_fireball"),
-			FabricEntityTypeBuilder.create(SpawnGroup.MISC, TowerGolemFireballEntity::new)
-					.dimensions(EntityDimensions.fixed(.4f, .4f))
+			EntityType.Builder.create(TowerGolemFireballEntity::new, SpawnGroup.MISC)
+					.dimensions(.4f, .4f)
 					.build()
 			);
 
@@ -130,7 +128,7 @@ public class ClassicBattleTowers implements ModInitializer {
 		
 			if(!nearbyGolems.isEmpty()) {
 				// Wake up Battle Tower Golem only on server side
-				if(!world.isClient) {
+				if(!world.isClient()) {
 					nearbyGolems.forEach(golem -> {
 						golem.wakeUpGolem();
 						golem.setTarget(player);
