@@ -9,6 +9,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.projectile.AbstractFireballEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -67,8 +69,9 @@ public class TowerGolemFireballEntity extends AbstractFireballEntity {
 	
 	private void createExplosion(BlockPos pos) {
 		Entity thrower = this.getOwner();
-		
-		if (!(thrower instanceof MobEntity) || getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+		MinecraftServer worldServer = getWorld().getServer();
+
+		if (!(thrower instanceof MobEntity) || (worldServer != null && worldServer.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING))) {
 			getWorld().createExplosion(thrower, pos.getX(), pos.getY(), pos.getZ(), explosionPower, ExplosionSourceType.MOB);
 		}
 	}
@@ -87,8 +90,8 @@ public class TowerGolemFireballEntity extends AbstractFireballEntity {
 		return false;
 	}
 
-	public boolean damage(DamageSource source, float amount) {
+	@Override
+	public boolean damage(ServerWorld world, DamageSource source, float amount) {
 		return false;
 	}
-	
 }

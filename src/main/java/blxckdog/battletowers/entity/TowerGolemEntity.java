@@ -27,6 +27,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -50,14 +51,15 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
 
     public static DefaultAttributeContainer.Builder createTowerGolemAttributes() {
         return LivingEntity.createLivingAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 300)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 7)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.7)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16)
-                .add(EntityAttributes.GENERIC_ARMOR, 1)
-                .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 2)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1);
+                .add(EntityAttributes.MAX_HEALTH, 300)
+                .add(EntityAttributes.ATTACK_DAMAGE, 7)
+                .add(EntityAttributes.ATTACK_KNOCKBACK, 0.7)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.3)
+                .add(EntityAttributes.FOLLOW_RANGE, 16)
+                .add(EntityAttributes.ARMOR, 1)
+                .add(EntityAttributes.ARMOR_TOUGHNESS, 2)
+                .add(EntityAttributes.KNOCKBACK_RESISTANCE, 1);
+
     }
 
 
@@ -109,7 +111,7 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
     }
 
     @Override
-    public boolean damage(DamageSource source, float amount) {
+    public boolean damage(ServerWorld world, DamageSource source, float amount) {
         if (source.getSource() != null) {
             Entity attacker = source.getSource();
 
@@ -124,7 +126,7 @@ public class TowerGolemEntity extends HostileEntity implements RangedAttackMob {
             }
         }
 
-        return super.damage(source, amount);
+        return super.damage(world, source, amount);
     }
 
     @Override
