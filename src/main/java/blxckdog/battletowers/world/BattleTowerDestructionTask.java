@@ -1,10 +1,16 @@
 package blxckdog.battletowers.world;
 
 import blxckdog.battletowers.ClassicBattleTowers;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.World.ExplosionSourceType;
+import net.minecraft.world.explosion.Explosion;
 
 public class BattleTowerDestructionTask implements Runnable {
 
@@ -66,13 +72,22 @@ public class BattleTowerDestructionTask implements Runnable {
         //int yOffset = underground ? floorCounter * 7 : -floorCounter * 7;
         int yOffset = -floorCounter * 7;
 
+        if(world.isClient) {
+            return;
+        }
+        ServerWorld serverWorld = (ServerWorld) world;
+        BattleTowerExplosion explosion = new BattleTowerExplosion(serverWorld);
+
         for (int x = -8; x < 8; x++) {
             for (int z = -8; z < 8; z++) {
                 for (int y = 1; y < 9; y++) {
                     BlockPos pos = startPos.add(x, yOffset + y, z);
 
-                    if (!world.isAir(pos)) {
-                        world.removeBlock(pos, false);
+                    float blastResistance = world.getBlockState(pos).getBlock().getBlastResistance();
+                    if (!world.isAir(pos) && blastResistance <= 600) {
+                        // Remove all blocks with blast resistance lower 600 (e.g. Ender Chest)
+                        explosion.updatePosition(pos);
+                        world.getBlockState(pos).onExploded(serverWorld, pos, explosion, ((itemStack, blockPos) -> {}));
                     }
                 }
             }

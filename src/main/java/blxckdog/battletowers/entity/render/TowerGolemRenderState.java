@@ -9,6 +9,7 @@ public class TowerGolemRenderState extends BipedEntityRenderState {
     protected TowerGolemRenderState() {
         super();
         isDormant = false;
+        baseScale = 2;
     }
 
 }
