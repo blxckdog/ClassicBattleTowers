@@ -9,6 +9,7 @@ import blxckdog.battletowers.world.BattleTowerDestructionManager;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.block.BlockState;
@@ -159,6 +160,42 @@ public class ClassicBattleTowers implements ModInitializer {
 
             return ActionResult.PASS;
         });
+
+
+        // Listen for chest or hopper break to wake up Battle Tower Golem
+        AttackBlockCallback.EVENT.register((player, world, hand, pos, direction) -> {
+            BlockState state = world.getBlockState(pos);
+
+            if(world.isClient) {
+                return ActionResult.PASS;
+            }
+
+            if(!state.isOf(Blocks.CHEST) && !state.isOf(Blocks.HOPPER)) {
+                return ActionResult.PASS;
+            }
+
+            List<TowerGolemEntity> nearbyGolems = world.getEntitiesByClass(
+                    TowerGolemEntity.class,
+                    new Box(pos).expand(10),
+                    golem -> true
+            );
+
+            if(!nearbyGolems.isEmpty()) {
+                // Wake up Battle Tower Golem only on server side
+                if(!world.isClient) {
+                    nearbyGolems.forEach(golem -> {
+                        golem.wakeUpGolem();
+                        golem.setTarget(player);
+                    });
+                }
+
+                // Prevent the chest from being broken
+                return ActionResult.FAIL;
+            }
+
+            return ActionResult.PASS;
+        });
+
     }
 
 }
